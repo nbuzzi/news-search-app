@@ -1,0 +1,38 @@
+.paginator {
+    ul {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul li {
+        display: inline;
+    }
+
+    ul li {
+        float: left;
+        padding: 5px 5px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    ul li {
+        &:hover {
+            background-color: #ddd;
+        }
+
+        &.selected {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        a,
+        a:active a:focus a:hover {
+            outline: none;
+            background: transparent;
+        }
+    }
+}
