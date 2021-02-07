@@ -1,0 +1,22 @@
+.news {
+    .valid-field {
+        input {
+            border-color: rgba(47, 199, 20, 0.363);
+
+            &:focus {
+                box-shadow: 0 0 0 0.2rem rgba(47, 199, 20, 0.363);
+            }
+        }
+    }
+
+    .invalid-field {
+        input {
+            border-color: rgba(180, 15, 15, 0.452);
+            ;
+
+            &:focus {
+                box-shadow: 0 0 0 0.2rem rgba(245, 4, 4, 0.452);
+            }
+        }
+    }
+}

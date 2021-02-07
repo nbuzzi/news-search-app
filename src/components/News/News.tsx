@@ -19,8 +19,8 @@ const validate = (values: INewsComponentProps) => {
 
     if (!values.searchText) {
         errors.searchText = `Required`;
-    } else if (values.searchText.length > 15) {
-        errors.searchText = `Search text must be 15 characters or less.`;
+    } else if (values.searchText.length < 5) {
+        errors.searchText = `Search text must be 5 characters or less.`;
     }
 
     return errors;
@@ -50,7 +50,7 @@ const NewsComponent: React.FC = () => {
     const { addToast } = useToasts();
 
     const processSearchRequest = useCallback((searchText: string) => {
-        if (!searchText) {
+        if (!searchText || searchText.length < 5) {
             return;
         }
 
@@ -59,7 +59,7 @@ const NewsComponent: React.FC = () => {
         searchServiceContext.searchByQuery(searchText, page, pageSize).subscribe((response: NewsResponse) => {
             setLoading(false);
             setNews(response.value);
-            setTotalRowCount(response.totalCount);
+            setTotalRowCount(Math.ceil(response.totalCount / pageSize));
         }, (err) => {
             console.error(err);
             setLoading(false);
@@ -87,10 +87,10 @@ const NewsComponent: React.FC = () => {
     }, [page, processSearchRequest]);
 
     return (
-        <>
+        <div className="news">
             <h2>News search</h2>
             <form onSubmit={formik.handleSubmit}>
-                <InputGroup className="mb-3">
+                <InputGroup className={formik.errors.searchText && formik.errors.searchText.length >= 5 ? `invalid-field mb-3` : !formik.touched || !formik.dirty ? `mb-3` : `valid-field mb-3`}>
                     <FormControl
                         id="searchText"
                         placeholder="Filter here..."
@@ -100,9 +100,11 @@ const NewsComponent: React.FC = () => {
                         value={formik.values.searchText}
                     />
                     <InputGroup.Append>
-                        <Button variant="outline-secondary" type="submit">Search</Button>
+                        <Button variant="outline-secondary" type="submit" disabled={Boolean(formik.errors.searchText)}>Search</Button>
                     </InputGroup.Append>
                 </InputGroup>
+
+                {formik.errors.searchText ? <div className="text-danger">{formik.errors.searchText}</div> : ''}
             </form>
 
             <Container className="d-flex flex-wrap justify-content-center">
@@ -110,7 +112,7 @@ const NewsComponent: React.FC = () => {
                     loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={6} totalRows={totalRowCount} setPageHandler={setPage} />
                 }
             </Container>
-        </>
+        </div>
     );
 };
 
