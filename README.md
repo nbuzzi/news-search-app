@@ -1,5 +1,13 @@
 # News search's app
 
+News search's app is an app created in React with CRA (create-react-app). This project includes the following technologies:
+
+* [React](https://reactjs.org/)
+* [TypeScript](https://www.typescriptlang.org/docs/)
+* [Axios](https://www.npmjs.com/package/axios)
+* [Bootstrap 4](https://react-bootstrap.github.io/)
+* [Formik](https://formik.org/docs/tutorial)
+
 To install all the dependencies you must run:
 
 ### `yarn` or `npm install`
@@ -81,70 +89,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 }
 ```
 
-3. `npx create-react-app [project-name] --typescript`
-
-4. cd into [project-name]
-
-5. Install the following dependecies to package.json 👇
-
-```javascript
-yarn add --dev typescript
-yarn add @types/node @types/react @types/react-dom @types/jest
-yarn add --dev tslint
-yarn add --dev tslint-config-prettier
-yarn add --dev tslint-plugin-prettier
-yarn add --dev tslint-react
-```
-
-6. Create a `tslint.json` file with the following config 👇
-
-```json
-{
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "rulesDirectory": ["tslint-plugin-prettier"],
-  "rules": {
-    "prettier": true,
-    "interface-name": false
-  }
-}
-```
-
-7. Create a `.prettierrc` file and add your desired rules i.e 👇
-
-```json
-{
-  "trailingComma": "es5",
-  "printWidth": 100,
-  "semi": false,
-  "singleQuote": true
-}
-```
-
-8. Quit and restart VSCode again
-
-> Note:
-> [tslint-config-prettier](https://www.npmjs.com/package/tslint-config-prettier) is shipped with a little CLI tool to help you check if your configuration contains any rules that are in conflict with Prettier. (require tslint installed <br/>
-> In order to execute the CLI tool, first add a script for it to `package.json`:
-
-```json
-{
-  "scripts": {
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
-  }
-}
-```
-
-> Then run `yarn tslint-check or npm run tslint-check`
-
-You may also run TS lint directlly as a `script` on your `package.json`
-
-```json
-"scripts": {
-     "lint": "tslint -c tslint.json src/**/*.{ts,tsx} --fix --format verbose"
- }
-```
-
-> Then run `yarn lint or npm run lint`
+3. Quit and restart VSCode again
 
 ## Learn More
 
