@@ -49,7 +49,6 @@ export const SeearchServiceContextProvider = (props: any) => {
             return getMockedData;
         }
 
-        // eslint-disable-next-line no-unreachable
         return new Observable((observer) => {
             axiosInstance.get<NewsResponse>(searchAPI, {
                 headers,

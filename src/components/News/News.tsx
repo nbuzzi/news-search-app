@@ -100,7 +100,7 @@ const NewsComponent: React.FC = () => {
                         value={formik.values.searchText}
                     />
                     <InputGroup.Append>
-                        <Button variant="outline-secondary" type="submit" disabled={Boolean(formik.errors.searchText)}>Search</Button>
+                        <Button variant="primary" type="submit" disabled={Boolean(formik.errors.searchText)}>Search</Button>
                     </InputGroup.Append>
                 </InputGroup>
 
