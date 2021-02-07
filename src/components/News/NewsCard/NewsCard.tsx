@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import { News, NewsImage } from '../../../models/News';
-
 import { Lightbox } from 'react-modal-image';
 
 import Scrollbars from 'react-custom-scrollbars';
@@ -62,7 +61,7 @@ const NewsCard = (props: INewsCardProps) => {
                         {processThumbnail(props.new.image)}
                         <Card.Body>
                             <Card.Title>{props.new.title}</Card.Title>
-                            <Scrollbars style={{ height: '15rem', width: '18rem' }}>
+                            <Scrollbars style={{ height: '10rem', width: '18rem' }}>
                                 <Card.Text>
                                     {makeDescription(props.new.body)}
                                 </Card.Text>

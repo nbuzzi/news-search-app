@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { NewsResponse } from '../../models/News';
 
+import { NewsResponse } from '../../models/News';
 import { Observable } from 'rxjs';
 import { AxiosInstance } from 'axios';
 import { MockedData } from './MockedData';
