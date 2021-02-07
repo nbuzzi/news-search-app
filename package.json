@@ -1,6 +1,14 @@
 {
-  "name": "exercise",
+  "name": "news-search-app",
+  "author": {
+    "name": "Nicolás Buzzi",
+    "email": "nico.cbuzzi@gmail.com",
+    "url": "https://github.com/nbuzzi"
+  },
   "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/nbuzzi/news-search-app"
+  },
   "private": true,
   "scripts": {
     "start": "react-scripts start",
