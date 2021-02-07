@@ -109,7 +109,7 @@ const NewsComponent: React.FC = () => {
 
             <Container className="d-flex flex-wrap justify-content-center">
                 {
-                    loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={6} totalRows={totalRowCount} setPageHandler={setPage} />
+                    loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={pageSize} totalRows={totalRowCount} setPageHandler={setPage} />
                 }
             </Container>
         </div>

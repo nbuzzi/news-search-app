@@ -19,7 +19,7 @@ const NewsCard = (props: INewsCardProps) => {
     const [imageSourceUrl, setImageSourceUrl] = useState('');
     const [thumbImageSourceUrl, setThumbImageSourceUrl] = useState('');
 
-    const processThumbnail = (image: NewsImage, newTitle: string = ''): JSX.Element => {
+    const processThumbnail = (image: NewsImage): JSX.Element => {
         if (!image) {
             return <></>;
         }
@@ -59,7 +59,7 @@ const NewsCard = (props: INewsCardProps) => {
             <Row xs={3} md={3} lg={3} className="custom-card mb-2">
                 <Col>
                     <Card>
-                        {processThumbnail(props.new.image, props.new.title)}
+                        {processThumbnail(props.new.image)}
                         <Card.Body>
                             <Card.Title>{props.new.title}</Card.Title>
                             <Scrollbars style={{ height: '15rem', width: '18rem' }}>
