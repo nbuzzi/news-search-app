@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
-import { Button, Col, Container, FormControl, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Container, Dropdown, DropdownButton, FormControl, InputGroup, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { SearchServiceContext } from '../../services/context/SearchServiceContext';
 import { useToasts } from 'react-toast-notifications';
 import { News, NewsResponse } from '../../models/News';
@@ -42,12 +42,18 @@ const NewsComponent: React.FC = () => {
     const [news, setNews] = useState([] as News[]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
-    const [pageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(6);
     const [totalRowCount, setTotalRowCount] = useState(0);
 
     const searchServiceContext = useContext(SearchServiceContext);
 
     const { addToast } = useToasts();
+
+    const renderTooltip = (props: {}) => (
+        <Tooltip id="pagination-tooltip" {...props}>
+            Select the number of news per page
+        </Tooltip>
+    );
 
     const processSearchRequest = useCallback((searchText: string) => {
         if (!searchText || searchText.length < 5) {
@@ -100,11 +106,31 @@ const NewsComponent: React.FC = () => {
                         value={formik.values.searchText}
                     />
                     <InputGroup.Append>
-                        <Button variant="primary" type="submit" disabled={Boolean(formik.errors.searchText)}>Search</Button>
+                        <OverlayTrigger
+                            placement="right"
+                            overlay={renderTooltip}
+                        >
+                            <DropdownButton
+                                as={InputGroup.Prepend}
+                                variant="outline-secondary"
+                                placeholder="Items per page"
+                                title={`${pageSize} items`}
+                                id="input-group-dropdown-1"
+                            >
+                                <Dropdown.Item href="#" onClick={() => setPageSize(6)}>6</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => setPageSize(10)}>10</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => setPageSize(15)}>15</Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item href="#" onClick={() => setPageSize(20)}>20</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => setPageSize(50)}>50</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => setPageSize(100)}>100</Dropdown.Item>
+                            </DropdownButton>
+                        </OverlayTrigger>
+                        <Button variant="primary" type="submit" disabled={Boolean(formik.errors.searchText) || !formik.dirty}>Search</Button>
                     </InputGroup.Append>
                 </InputGroup>
 
-                {formik.errors.searchText ? <div className="text-danger">{formik.errors.searchText}</div> : ''}
+                {formik.errors.searchText ? <div className="text-danger d-flex justify-content-center mb-4">{formik.errors.searchText}</div> : ''}
             </form>
 
             <Container className="d-flex flex-wrap justify-content-center">
@@ -112,7 +138,7 @@ const NewsComponent: React.FC = () => {
                     loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={pageSize} totalRows={totalRowCount} setPageHandler={setPage} />
                 }
             </Container>
-        </div>
+        </div >
     );
 };
 
