@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/custom-definitions.d.ts" />
 
 import React, { useState } from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
+import { Card, Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { News, NewsImage } from '../../../models/News';
 import { Lightbox } from 'react-modal-image';
 
@@ -12,6 +12,12 @@ import './NewsCard.scss';
 interface INewsCardProps {
     new: News;
 }
+
+const renderTooltip = (props: {}) => (
+    <Tooltip id="image-tooltip" {...props}>
+        Click here to open this image in a full screen window.
+    </Tooltip>
+);
 
 const NewsCard = (props: INewsCardProps) => {
     const [show, setShow] = useState(false);
@@ -34,8 +40,15 @@ const NewsCard = (props: INewsCardProps) => {
             || (image.url && image.url.length && image.url)
             || 'http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png';
 
-        return (<Card.Img variant="top" src={imageSource} onClick={() => handleImageClick(((image.url && image.url.length && image.url) || imageSource),
-            ((image.thumbnail && image.thumbnail.length && image.thumbnail) || imageSource))} />);
+        return (
+            <OverlayTrigger
+                placement="bottom"
+                overlay={renderTooltip}
+            >
+                <Card.Img variant="top" src={imageSource} onClick={() => handleImageClick(((image.url && image.url.length && image.url) || imageSource),
+                    ((image.thumbnail && image.thumbnail.length && image.thumbnail) || imageSource))} />
+            </OverlayTrigger>
+        );
     };
 
     const makeDescription = (description: string): string => {

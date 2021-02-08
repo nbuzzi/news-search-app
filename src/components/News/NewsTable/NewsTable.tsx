@@ -12,6 +12,7 @@ interface INewsTableProps {
     pageSize: number;
     totalRows: number;
     setPageHandler: React.Dispatch<React.SetStateAction<number>>;
+    showPaginator: boolean;
 }
 
 const NewsTable = (props: INewsTableProps) => {
@@ -29,7 +30,9 @@ const NewsTable = (props: INewsTableProps) => {
                 })
             }
 
-            { props.news && props.news.length > 0 ?
+            { ((!props.news || !props.news.length) && props.showPaginator) ? <span className="d-flex justify-content-center text-info mt-4 mb-5">There're no news in the page.</span> : ''}
+
+            { ((props.news && props.news.length > 0) || props.showPaginator) ?
                 <div className="d-flex justify-content-center w-100 paginator mb-4">
                     <ReactPaginate pageCount={props.totalRows} pageRangeDisplayed={props.pageSize} marginPagesDisplayed={props.pageSize}
                         initialPage={props.currentPage} onPageChange={(ev) => onPageChanged(ev.selected)}>

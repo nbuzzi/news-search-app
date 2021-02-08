@@ -41,6 +41,7 @@ const renderSpinner = () => {
 const NewsComponent: React.FC = () => {
     const [news, setNews] = useState([] as News[]);
     const [loading, setLoading] = useState(false);
+    const [paginatorShow, setPaginatorShow] = useState(false);
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(6);
     const [totalRowCount, setTotalRowCount] = useState(0);
@@ -62,9 +63,11 @@ const NewsComponent: React.FC = () => {
 
         setLoading(true);
 
-        searchServiceContext.searchByQuery(searchText, page, pageSize).subscribe((response: NewsResponse) => {
+        searchServiceContext.searchByQuery(searchText, page, pageSize, true, false).subscribe((response: NewsResponse) => {
             setLoading(false);
-            setNews(response.value);
+            setNews(response.value || []);
+
+            setPaginatorShow(!response.value.length && page > 1);
             setTotalRowCount(Math.ceil(response.totalCount / pageSize));
         }, (err) => {
             console.error(err);
@@ -107,7 +110,7 @@ const NewsComponent: React.FC = () => {
                     />
                     <InputGroup.Append>
                         <OverlayTrigger
-                            placement="right"
+                            placement="bottom"
                             overlay={renderTooltip}
                         >
                             <DropdownButton
@@ -122,8 +125,7 @@ const NewsComponent: React.FC = () => {
                                 <Dropdown.Item href="#" onClick={() => setPageSize(15)}>15</Dropdown.Item>
                                 <Dropdown.Divider />
                                 <Dropdown.Item href="#" onClick={() => setPageSize(20)}>20</Dropdown.Item>
-                                <Dropdown.Item href="#" onClick={() => setPageSize(50)}>50</Dropdown.Item>
-                                <Dropdown.Item href="#" onClick={() => setPageSize(100)}>100</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => setPageSize(50)}>50 (max)</Dropdown.Item>
                             </DropdownButton>
                         </OverlayTrigger>
                         <Button variant="primary" type="submit" disabled={Boolean(formik.errors.searchText) || !formik.dirty}>Search</Button>
@@ -135,7 +137,7 @@ const NewsComponent: React.FC = () => {
 
             <Container className="d-flex flex-wrap justify-content-center">
                 {
-                    loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={pageSize} totalRows={totalRowCount} setPageHandler={setPage} />
+                    loading ? renderSpinner() : <NewsTable news={news} currentPage={page} pageSize={pageSize} totalRows={totalRowCount} setPageHandler={setPage} showPaginator={paginatorShow} />
                 }
             </Container>
         </div >

@@ -11,7 +11,7 @@ const MOCKED_DATA_ENABLED: boolean = false;
 
 export interface ISearchServiceContext {
     children?: JSX.Element;
-    searchByQuery: (query: string, page: number, pageSize: number) => Observable<NewsResponse>;
+    searchByQuery: (query: string, pageNumber: number, pageSize: number, withThumbnails?: boolean, safeSearch?: boolean) => Observable<NewsResponse>;
 }
 
 interface ICustomHeaders {
@@ -36,10 +36,13 @@ export const SeearchServiceContextProvider = (props: any) => {
     /**
      * Obtains all the news based on a given/provided filter.
      * @param query query filter
-     * @param page page number
+     * @param pageNumber page number
      * @param pageSize page size
+     * @param withThumbnails (optional) include thumbnails
+     * @param safeSearch (optional) include adult content (default: true)
      */
-    const newsSearch = (query: string, page: number, pageSize: number): Observable<NewsResponse> => {
+    const newsSearch = (query: string, pageNumber: number, pageSize: number, withThumbnails: boolean = true, safeSearch: boolean = true): Observable<NewsResponse> => {
+        // This is a feature-flag (by default configured in false) to determine if this method should return or not a mocked response.
         if (MOCKED_DATA_ENABLED) {
             const getMockedData = new Observable<NewsResponse>(observer => {
                 observer.next(MockedData as NewsResponse);
@@ -49,14 +52,21 @@ export const SeearchServiceContextProvider = (props: any) => {
             return getMockedData;
         }
 
+        /*
+        * Based on the given document with the requirement spec (along with the respective API information and headers/auth)
+        * The parameter to determine the current page selected is "page" but it doesn't work.
+        * Therefore in the following official link (API's documentation): https://rapidapi.com/contextualwebsearch/api/web-search?endpoint=apiendpoint_b8b43008-dd94-4b86-8fd0-26d70a4e870b
+        * The doc indicates that the parameter should be "pageNumber" instead of just "page".
+        */
         return new Observable((observer) => {
             axiosInstance.get<NewsResponse>(searchAPI, {
                 headers,
                 params: {
                     q: query,
-                    page,
+                    pageNumber, // read above.
                     pageSize,
-                    withThumbnails: true
+                    withThumbnails,
+                    safeSearch
                 },
             })
                 .then((response) => {

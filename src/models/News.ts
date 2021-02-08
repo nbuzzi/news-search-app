@@ -1,3 +1,6 @@
+/**
+ * News response interface.
+ */
 export interface NewsResponse {
     didUMean: string;
     relatedSearch: News[];
@@ -6,6 +9,9 @@ export interface NewsResponse {
     _type: string;
 }
 
+/**
+ * News model interface.
+ */
 export interface News {
     id: string;
     title: string;
@@ -20,12 +26,18 @@ export interface News {
     image: NewsImage;
 }
 
+/**
+ * News image provider interface.
+ */
 export interface NewsProvider {
     favIcon: string;
     favIconBase64Encoding: string;
     name: string;
 }
 
+/**
+ * News image interface.
+ */
 export interface NewsImage {
     base64Encoding: string;
     height: number;
