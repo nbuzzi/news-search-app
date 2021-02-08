@@ -35,10 +35,12 @@ const NewsCard = (props: INewsCardProps) => {
             setShow(true);
         };
 
+        const notAvailableImageUrl: string = 'http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png';
+
         const imageSource = (image.thumbnail && image.thumbnail.length && image.thumbnail)
             || (image && image.base64Encoding && image.base64Encoding.length && image.base64Encoding)
             || (image.url && image.url.length && image.url)
-            || 'http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png';
+            || notAvailableImageUrl;
 
         return (
             <OverlayTrigger
@@ -46,7 +48,7 @@ const NewsCard = (props: INewsCardProps) => {
                 overlay={renderTooltip}
             >
                 <Card.Img variant="top" src={imageSource} onClick={() => handleImageClick(((image.url && image.url.length && image.url) || imageSource),
-                    ((image.thumbnail && image.thumbnail.length && image.thumbnail) || imageSource))} />
+                    ((image.thumbnail && image.thumbnail.length && image.thumbnail) || imageSource))} onError={(e: ((React.SyntheticEvent<HTMLImageElement, Event>))) => e.currentTarget.src = notAvailableImageUrl} />
             </OverlayTrigger>
         );
     };
