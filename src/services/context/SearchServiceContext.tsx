@@ -39,9 +39,9 @@ export const SeearchServiceContextProvider = (props: any) => {
      * @param pageNumber page number
      * @param pageSize page size
      * @param withThumbnails (optional) include thumbnails
-     * @param safeSearch (optional) include adult content (default: true)
+     * @param safeSearch (optional) include adult content
      */
-    const newsSearch = (query: string, pageNumber: number, pageSize: number, withThumbnails: boolean = true, safeSearch: boolean = true): Observable<NewsResponse> => {
+    const newsSearch = (query: string, pageNumber: number, pageSize: number, withThumbnails: boolean = true, safeSearch: boolean = false): Observable<NewsResponse> => {
         // This is a feature-flag (by default configured in false) to determine if this method should return or not a mocked response.
         if (MOCKED_DATA_ENABLED) {
             const getMockedData = new Observable<NewsResponse>(observer => {

@@ -63,7 +63,7 @@ const NewsComponent: React.FC = () => {
 
         setLoading(true);
 
-        searchServiceContext.searchByQuery(searchText, page, pageSize, true, false).subscribe((response: NewsResponse) => {
+        searchServiceContext.searchByQuery(searchText, page, pageSize).subscribe((response: NewsResponse) => {
             setLoading(false);
             setNews(response.value || []);
 
